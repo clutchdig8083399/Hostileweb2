@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Hostile</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #3b82f6;
+      --background: #000000;
+      --surface: #111111;
+      --text: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --accent: #8b5cf6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Modern gradient background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, 
+        rgba(99, 102, 241, 0.15),
+        rgba(59, 130, 246, 0.1),
+        transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .title {
+      font-size: 4.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 2rem;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+
+    .play-button {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--text);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      margin: 2rem 0;
+    }
+
+    .play-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .play-button:hover::before {
+      opacity: 1;
+    }
+
+    .play-button span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .image-container {
+      width: 500px;
+      height: 300px;
+      position: relative;
+      margin: 3rem 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .floating-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .description {
+      font-size: 1.25rem;
+      max-width: 700px;
+      text-align: center;
+      margin: 2rem 0;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .discord-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      background: var(--surface);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .discord-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    #subtitleDisplay {
+      font-size: 1.25rem;
+      font-weight: 600;
+      min-height: 2rem;
+      color: var(--text-secondary);
+      margin: 2rem 0;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    .side-text {
+      position: fixed;
+      left: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .side-text-line {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .title {
+        font-size: 3rem;
+      }
+
+      .image-container {
+        width: 100%;
+        height: 250px;
+      }
+
+      .side-text {
+        display: none;
+      }
+
+      .container {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Hostile</h1>
+    
+    <button class="play-button" onclick="toggleAudio()">
+      <span>Play Audio</span>
+    </button>
+
+    <div class="image-container">
+      <img src="Screenshot 2025-04-15 000658.png" alt="sneak peek of what we offer" class="floating-image" id="floatingImage">
+    </div>
+
+    <div class="description">
+      <p>We offer all kinds of cheats and ethical tools. We try and make it so that everything is cheap, even if you cannot afford it.</p>
+    </div>
+
+    <a href="discord.gg/65HkgKrd6s" class="discord-link" target="_blank">
+      Join Our Discord
+    </a>
+
+    <audio id="hostileAudio">
+      <source src="Run Me My Money (Intro).mp3" type="audio/mpeg" />
+    </audio>
+
+    <div id="subtitleDisplay"></div>
+  </div>
+
+  <div class="side-text" id="sideText"></div>
+
+  <script>
+    const audio = document.getElementById("hostileAudio");
+    const button = document.querySelector(".play-button");
+    const subtitleDisplay = document.getElementById("subtitleDisplay");
+    let audioContext, analyser, source, dataArray;
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        button.querySelector('span').textContent = "Pause Audio";
+      } else {
+        audio.pause();
+        button.querySelector('span').textContent = "Play Audio";
+      }
+    }
+
+    function initAudio() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 256;
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      source = audioContext.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+    }
+
+    audio.addEventListener("timeupdate", () => {
+      const currentTime = audio.currentTime;
+      const currentSubtitle = subtitles.find(
+        sub => currentTime >= sub.start && currentTime <= sub.end
+      );
+      subtitleDisplay.textContent = currentSubtitle ? currentSubtitle.text : "";
+    });
+
+    let subtitles = [];
+
+    fetch("lyrics.vtt")
+      .then(response => response.text())
+      .then(data => {
+        const regex = /(\d{2}:\d{2}.\d{3}) --> (\d{2}:\d{2}.\d{3})\n(.+?)(?=\n\n|$)/gs;
+        let match;
+        while ((match = regex.exec(data)) !== null) {
+          subtitles.push({
+            start: toSeconds(match[1]),
+            end: toSeconds(match[2]),
+            text: match[3].trim()
+          });
+        }
+      });
+
+    function toSeconds(time) {
+      const parts = time.split(":");
+      const [min, sec] = parts.map(parseFloat);
+      return min * 60 + sec;
+    }
+
+    const sideTextLines = [
+      "Welcome",
+      "Initializing...",
+      "Access Granted",
+      "System Ready",
+      "Hostile Active"
+    ];
+
+    const sideText = document.getElementById("sideText");
+    sideTextLines.forEach((line, i) => {
+      const div = document.createElement("div");
+      div.className = "side-text-line";
+      div.style.animationDelay = `${i * 0.2}s`;
+      div.textContent = line;
+      sideText.appendChild(div);
+    });
+
+    const image = document.getElementById('floatingImage');
+    document.addEventListener('mousemove', (e) => {
+      const rect = image.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      
+      image.style.transform = `
+        perspective(1000px)
+        rotateY(${x * 10}deg)
+        rotateX(${-y * 10}deg)
+        scale(1.05)
+      `;
+    });
+
+    image.addEventListener('mouseleave', () => {
+      image.style.transform = 'none';
+    });
+
+    function animateBackground() {
+      if (audio.paused) return;
+
+      analyser.getByteFrequencyData(dataArray);
+      const bass = dataArray.slice(0, 10).reduce((sum, value) => sum + value, 0) / 10;
+      const intensity = Math.min(bass / 256, 1);
+
+      document.body.style.setProperty('--primary', `hsl(${220 + intensity * 40}, 80%, 60%)`);
+      document.body.style.setProperty('--secondary', `hsl(${190 + intensity * 30}, 80%, 60%)`);
+
+      requestAnimationFrame(animateBackground);
+    }
+
+    audio.addEventListener('play', () => {
+      if (!audioContext) initAudio();
+      animateBackground();
+    });
+  </script>
+</body>
+</html>
