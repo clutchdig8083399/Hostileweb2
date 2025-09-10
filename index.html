@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hostile</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  #bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+  }
+
+  .glass-card {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    min-width: 300px;
+    max-width: 600px;
+    text-align: center;
+    backdrop-filter: blur(3px);
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 0 0 6px rgba(0,0,0,0.6); }
+  p { font-size: 1.25rem; margin-bottom: 1rem; text-shadow: 0 0 4px rgba(0,0,0,0.5); }
+
+  .controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: rgba(3, 3, 3, 0.6);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #000000;
+    transition: transform 0.2s, background 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  button:hover { transform: scale(1.05); background: rgba(14, 165, 233, 0.7); }
+  input[type="range"] { width: 150px; accent-color: #38bdf8; }
+
+  .discord-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(88, 101, 242, 0.6);
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #181515;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: transform 0.2s, background 0.2s;
+    margin-top: 1rem;
+  }
+  .discord-btn:hover { transform: scale(1.05); background: rgba(88, 101, 242, 0.9); }
+  .discord-btn img { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+
+<video autoplay loop muted playsinline id="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="container">
+  <div class="glass-card">
+    <h1>Hostile</h1>
+    <p>We provide ethical hacking skills and tools for testing security.</p>
+    <p>We also provide cheating tools and resources to make your own.</p>
+
+    <!-- Audio controls inside glass card -->
+    <div class="controls">
+      <button id="prev">prev</button>
+      <button id="playPause">Play</button>
+      <button id="next">next</button>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <a href="https://discord.gg/65HkgKrd6s" target="_blank" class="discord-btn">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
+      Join Discord
+    </a>
+  </div>
+</div>
+
+<audio id="bg-audio"></audio>
+
+<script>
+// Grab DOM elements
+const audio = document.getElementById('bg-audio');
+const playPause = document.getElementById('playPause');
+const volume = document.getElementById('volume');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+
+// Raw filenames (exact names as on your computer)
+const rawSongs = [
+  "swore_to_lose.mp3",
+  "DARKIE STILL CaN NOT RAP.mp3",
+  "CAN'T STOP THA KAOS.mp3",
+  "Tokyo.mp3",
+  "oh shit! CRUS.mp3",
+  "ltg SHADOWS OF EVIL.mp3"
+];
+
+// Encode filenames safely for browser
+const songs = rawSongs.map(s => encodeURIComponent(s));
+
+// Track index
+let currentSong = 0;
+
+// Load a song safely
+function loadSong(index) {
+  audio.src = songs[index];
+  audio.load();
+  audio.play().catch(err => console.log("Audio error:", err));
+  playPause.textContent = "Pause";
+}
+
+// Start first song
+loadSong(currentSong);
+
+// Play/Pause
+playPause.addEventListener('click', () => {
+  if(audio.paused){
+    audio.play();
+    playPause.textContent = "Pause";
+  } else {
+    audio.pause();
+    playPause.textContent = "Play";
+  }
+});
+
+// Volume
+volume.addEventListener('input', () => {
+  audio.volume = volume.value;
+});
+
+// Next song
+next.addEventListener('click', () => {
+  currentSong = (currentSong + 1) % songs.length;
+  loadSong(currentSong);
+});
+
+// Previous song
+prev.addEventListener('click', () => {
+  currentSong = (currentSong - 1 + songs.length) % songs.length;
+  loadSong(currentSong);
+});
+
+// Auto-next on end
+audio.addEventListener('ended', () => {
+  next.click();
+});
+</script>
+
+</body>
+</html>
