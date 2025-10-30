@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hostile</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<video autoplay loop muted playsinline id="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<div class="container">
+  <div class="glass-card">
+    <h1>Orced.Net</h1>
+    <p>We provide ethical hacking skills and tools for testing security.</p>
+    <p>We also provide cheating tools and resources to make your own.</p>
+
+   
+    <div class="controls">
+      <button id="prev">prev</button>
+      <button id="playPause">Play</button>
+      <button id="next">next</button>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <a href="https://discord.gg/65HkgKrd6s" target="_blank" class="discord-btn">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord">
+      Join Discord
+    </a>
+
+    
+    <a href="https://www.youtube.com/@orced.cheats" target="_blank" class="youtube-btn">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" alt="YouTube">
+      Subscribe
+    </a>
+  </div>
+</div>
+
+<audio id="bg-audio"></audio>
+
+<script>
+const audio = document.getElementById('bg-audio');
+const playPause = document.getElementById('playPause');
+const volume = document.getElementById('volume');
+const prev = document.getElementById('prev');
+const next = document.getElementById('next');
+
+
+const rawSongs = [
+  "swore_to_lose.mp3",
+  "DARKIE STILL CaN NOT RAP.mp3",
+  "CAN'T STOP THA KAOS.mp3",
+  "Tokyo.mp3",
+  "oh shit! CRUS.mp3",
+  "ltg SHADOWS OF EVIL.mp3",
+  "Kill Dyll - knife (Official Audio).mp3",
+  "Kill Dyll - OBSIDIAN (Official Audio).mp3",
+  "Kill Dyll - SACRED CROWN (Official Audio).mp3",
+  "Killer gang ANARCHIST!.mp3",
+  "Killer gang intro jewel.mp3",
+  "Cutty Vibez x Jaswed x axaero - LIFESTYLE.mp3",
+  "do not resurrect - takeshi kovacs concerto in F minor.mp3",
+  "do not resurrect - aim to please, shoot to kill.mp3",
+
+];
+
+const songs = rawSongs.map(s => encodeURIComponent(s));
+
+
+let currentSong = 0;
+
+
+function loadSong(index) {
+  audio.src = songs[index];
+  audio.load();
+  audio.play().catch(err => console.log("Audio error:", err));
+  playPause.textContent = "Pause";
+}
+
+
+loadSong(currentSong);
+
+
+playPause.addEventListener('click', () => {
+  if(audio.paused){
+    audio.play();
+    playPause.textContent = "Pause";
+  } else {
+    audio.pause();
+    playPause.textContent = "Play";
+  }
+});
+
+
+volume.addEventListener('input', () => {
+  audio.volume = volume.value;
+});
+
+
+next.addEventListener('click', () => {
+  currentSong = (currentSong + 1) % songs.length;
+  loadSong(currentSong);
+});
+
+
+prev.addEventListener('click', () => {
+  currentSong = (currentSong - 1 + songs.length) % songs.length;
+  loadSong(currentSong);
+});
+
+
+audio.addEventListener('ended', () => {
+  next.click();
+});
+</script>
+
+</body>
+</html>
