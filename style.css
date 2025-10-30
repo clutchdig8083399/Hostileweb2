@@ -1,0 +1,95 @@
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        overflow: hidden;
+    }
+
+    #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+    .container {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        gap: 20px;
+    }
+
+    .glass-card {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        padding: 30px;
+        min-width: 30px;
+        max-width: 600px;
+        text-align: center;
+        backdrop-filter: blur(3px);
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 0 0 6px rgba(0,0,0,0.6); }
+    p { font-size: 1.25rem; margin-bottom: 1rem; text-shadow: 0 0 4px rgba(0,0,0,0.5); }
+
+  .controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem;}
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: rgba(3, 3, 3, 0.6);
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    color: #000000;
+    transition: transform 0.2s, background 0.2s;
+    backdrop-filter: blur(10px);
+  }
+  button:hover { transform: scale(1.05); background: rgba(14, 165, 233, 0.7); }
+  input[type="range"] { width: 150px;accent-color: #38bdf8; }
+
+  .discord-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(88, 101, 242, 0.6);
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #181515;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s, background 0.2s;
+    margin-top: 1rem;
+    white-space: nowrap; 
+  }
+  .discord-btn:hover { transform: scale(1.05); background: rgba(88, 101, 242, 0.9);}
+  .discord-btn img { width: 24px; height: 24px;}
+
+  .youtube-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: darkred;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s, background 0.2s;
+    margin-top: 1rem;
+  }
+.youtube-btn:hover { transform: scale(1.05); background: red;}
+.youtube-btn { white-space: nowrap; }
+.youtube-btn img {width: 24px; height: 24px;}
